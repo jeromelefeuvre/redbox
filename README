@@ -104,3 +104,5 @@ One of the fixes for this is to slide an iFrame under your popup (which IE6 cons
 cover up the selects with a plain white background and then have your popup show on top of this.  In this fork
 of redbox, there is code to detect IE6 (based on the Microsoft recommendations on how to do so) and to insert
 an iFrame.  All other browsers (IE 7, 8, etc) and non-IE (firefox, safari, etc) will be unaffected by this change.
+
+ScrollTop has been deleted and works on all browsers.

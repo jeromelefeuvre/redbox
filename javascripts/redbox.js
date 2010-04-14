@@ -2,7 +2,7 @@
 var RedBox = {
 
   isIE6: null,
-  
+
   usingIE6: function ()
   {
     if (this.isIE6 == null) {
@@ -11,7 +11,7 @@ var RedBox = {
 
     return(this.isIE6);
   },
-  
+
   getInternetExplorerVersion: function()
   // Returns the version of Internet Explorer or a -1
   // (indicating the use of another browser).
@@ -31,7 +31,7 @@ var RedBox = {
   {
     this.showOverlay();
     new Effect.Appear('RB_window', {duration: 0.4, queue: 'end'});        
-    Element.scrollTo('RB_window');
+    // Element.scrollTo('RB_window');
     this.cloneWindowContents(id);
   },
 
@@ -48,7 +48,7 @@ var RedBox = {
     this.moveChildren($(id), $('RB_window'));
     Element.hide('RB_loading');
     new Effect.Appear('RB_window', {duration: 0.4, queue: 'end'});  
-    Element.scrollTo('RB_window');
+    // Element.scrollTo('RB_window');
     this.setWindowPosition();
   },
 
@@ -110,8 +110,22 @@ var RedBox = {
     var width = dimensions.width;
     var height = dimensions.height;        
     
+    if( typeof( window.pageYOffset ) == 'number' ) {
+      //Netscape compliant
+      scrOfY = window.pageYOffset;
+    } else if( document.body && ( document.body.scrollLeft || document.body.scrollTop ) ) {
+      //DOM compliant
+      scrOfY = document.body.scrollTop;
+    } else if( document.documentElement && ( document.documentElement.scrollLeft || document.documentElement.scrollTop ) ) {
+      //IE6 standards compliant mode
+      scrOfY = document.documentElement.scrollTop;
+    }
+    else {
+      scrOfY = document.documentElement.scrollTop;
+    }
+    
     $("RB_window").style['left'] = ((pagesize[0] - width)/2) + "px";
-    $("RB_window").style['top'] = ((pagesize[1] - height)/4) + "px";
+    $("RB_window").style['top'] = (scrOfY + ((pagesize[1] - height)/2)) + "px";
     
     if (this.usingIE6()) {
       $("RB_iframe").style['position'] = "absolute";
